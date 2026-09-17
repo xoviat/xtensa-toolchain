@@ -57,11 +57,10 @@ runs:
       shell: bash
       run: |
         export HOST_TARGET=$(rustup show | grep "Default host" | sed -e 's/.* //')
-        if [ $HOST_TARGET = 'aarch64-pc-windows-msvc']; then
-          echo "HOST_TARGET=x86_64-pc-windows-msvc" >> $GITHUB_ENV
-        else
-          echo "HOST_TARGET=$HOST_TARGET" >> $GITHUB_ENV
+        if [[ "$HOST_TARGET" == "aarch64-pc-windows-msvc" ]]; then
+          HOST_TARGET="x86_64-pc-windows-msvc"
         fi
+        echo "HOST_TARGET=$HOST_TARGET" >> "$GITHUB_ENV"
 
     - name: Install ldproxy
       if: inputs.ldproxy == 'true'
